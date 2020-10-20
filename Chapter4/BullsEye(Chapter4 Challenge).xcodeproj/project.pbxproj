@@ -113,7 +113,7 @@
 					};
 				};
 			};
-			buildConfigurationList = 40C5C9C522E446DA003E3FCB /* Build configuration list for PBXProject "BullsEye" */;
+			buildConfigurationList = 40C5C9C522E446DA003E3FCB /* Build configuration list for PBXProject "BullsEye(Chapter4 Challenge)" */;
 			compatibilityVersion = "Xcode 9.3";
 			developmentRegion = en;
 			hasScannedForEncodings = 0;
@@ -289,7 +289,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "BullsEye/Preview\\ Content";
+				DEVELOPMENT_ASSET_PATHS = "BullsEye/Preview\\Content";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = BullsEye/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -308,7 +308,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_ASSET_PATHS = "BullsEye/Preview\\ Content";
+				DEVELOPMENT_ASSET_PATHS = "BullsEye/Preview\\Content";
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = BullsEye/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -325,7 +325,7 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
-		40C5C9C522E446DA003E3FCB /* Build configuration list for PBXProject "BullsEye" */ = {
+		40C5C9C522E446DA003E3FCB /* Build configuration list for PBXProject "BullsEye(Chapter4 Challenge)" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				40C5C9DC22E446DC003E3FCB /* Debug */,

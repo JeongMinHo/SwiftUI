@@ -4,6 +4,7 @@
 
 - SwiftUI가 흥미롭기는 하지만 아마 지금까지 앱들의 대부분은 UIKit을 사용한 Swift에 의해 작성되었을 것입니다. 하지만 이것을 SwiftUI로 다시 작성할 필요는 없습니다!
 - 조금의 코드만 더 있다면, UIKit의 view들을 SwiftUI 뷰들로 바꾸는 것이 가능합니다. 
+- 애플에서는 SwiftUI를 Swift의 힘과 함께 애플의 모든 플랫폼에서 사용자 인터페이스를 구축하는 혁신적이고 예외적으로 간단한 방법이라고 설명하고 있습니다. 지금까지 대부분의 앱들은 UIKit을 사용하여 개발했지만 SwiftUI는 이러한 프레임워크를 통합해서 사용하는 것이 가능하고 이것에 대해서 이번 챕터에서 이에 대해 알아봅니다.
 
 
 
@@ -47,7 +48,12 @@
 ![스크린샷 2020-10-20 오전 10 54 01](https://user-images.githubusercontent.com/48345308/96530510-918fae00-12c2-11eb-9d54-f5033cff3dee.png)
 
 - 다음으로, 라이브러리에서 **Hosting View Controller** 를 스토리보드에 드래그하고 **Play RGBullsEye** 버튼을 컨트롤 드래그해 *Show* 를 선택합니다.
+
 - ***Hosting View Controller*** 란 content가 SwiftUI View인 UIViewController 입니다!
+
+  ![스크린샷 2020-10-20 오후 2 14 35](https://user-images.githubusercontent.com/48345308/96543099-995d4b80-12de-11eb-9fbf-d431d80c4d10.png)
+
+- 애플 공식 문서를 본다면 UIHostingController란 SwiftUI의 뷰 계층을 관리하는 UIKIt view contoller라는 것을 알 수 있습니다.
 
 
 
@@ -55,7 +61,7 @@
 
 - viewController에서 SwiftUI를 import한 후 *segue* 를 컨트롤 드래그 하여 viewController에 @IBSegueAction을 생성합니다.
 - *@IBSegueAction* 은 Xcode11에서 새로 나왔으며 *prepare(for:sender:)* 대신에 UIKit 앱에서 사용하는 것이 가능합니다.
-- 이것은 특히 목적지 뷰 컨트롤러를 생성할 때 프로퍼티를 설정하는 경우 유용합니다. 이것은 segue에 버ㅏ로 연결되며 심지어 segue identifier도 필요 없기 때문입니다.
+- 이것은 특히 목적지 뷰 컨트롤러를 생성할 때 프로퍼티를 설정하는 경우 유용합니다. 이것은 segue에 바로 연결되며  segue identifier도 필요 없습니다.
 
 ```Swift
 @IBSegueAction func openRGBullsEye(_ coder: NSCoder) -> UIViewController? {
@@ -82,8 +88,35 @@
   4. ContentView에게 *NavigationLink* 를 추가합니다.
 
      
-
+   
+     <img width="424" alt="스크린샷 2020-10-20 오후 2 20 28" align = "left" src="https://user-images.githubusercontent.com/48345308/96543474-69fb0e80-12df-11eb-8d0d-7ec8229c11ae.png" >
   
+  - NavigationLink란 navigation presentation을 관리하는 뷰입니다.
+  - NavigationLink를 사용하여 링크 안에 어떤 종류의 것을 보여줘야 할지 제공해야 합니다. 이를 통해서 NavigationView의 다음 View로 넘어가는 것을 가능하게 해줍니다.
+  
+  ```Swift
+  struct ContentView: View {
+    var body: some View {
+      NavigationView {
+        NavigationLink(destination: NextContentView()) {
+          Text("Hello")
+        }
+      }
+    }
+  }
+  
+  struct NextContentView: View {
+    var body: some View {
+      VStack {
+        Text("World")
+      }
+    }
+  }
+  ```
+  
+  
+
+![스크린샷 2020-10-20 오후 5.53.53](/Users/user/Library/Application Support/typora-user-images/스크린샷 2020-10-20 오후 5.53.53.png)
 
 ![스크린샷 2020-10-20 오전 11 29 41](https://user-images.githubusercontent.com/48345308/96532796-8db25a80-12c7-11eb-94d9-3623d445d5b4.png)
 
@@ -98,6 +131,16 @@
 
 
 #### Conformint to UIViewControllerRepresentable
+
+
+
+<img width="756" alt="스크린샷 2020-10-20 오후 2 24 01" src="https://user-images.githubusercontent.com/48345308/96543709-e857b080-12df-11eb-8a3a-d0990c0bf9c8.png">
+
+- UIViewControllerRepresentable은 프로토콜로서 UIKIt view controller를 보여주는 view 입니다.
+- UIKit에서는 SwiftUI를 위해 UIHostingViewController가 있었다면 SwiftUI에서는 UIKit View Controller를 부르기 위해 UIViewControllerRepresentable을 사용하게 됩니다.
+- 이를 위해 UIViewControllerRepresentable을 준수하는 struct를 만들고 SwiftUI 뷰 계층에 UIViewController를 포함하도록 프로토콜 요구사항을 구현해야 합니다.
+
+
 
 ```Swift
 struct ViewControllerRepresentation:
@@ -151,7 +194,7 @@ NavigationView {
 
 - 하지만 이렇게 했을 때 BullsEye view의 navigation bar title이 없습니다.
 
-  - SwiftUI가 navigation controller를 사용할지라도 SwiftUI navigation controller와 BullsEye view Controller 사이에는 **wrapper view controller** 가 있기 때문입니다. (**)
+  - SwiftUI가 navigation controller를 사용할지라도 SwiftUI navigation controller와 BullsEye view Controller 사이에는 **wrapper view controller** 가 있기 때문입니다. 
 
   - 이 wrapper view controller는 navigation controller의 title에 대한 정보를 가지고 있지 않습니다.
 
@@ -172,13 +215,28 @@ NavigationView {
 ### Hosting a UIKit view with data dependencies
 
 - 지금까지는 BullsEye view controller와 나머지 SwiftUI 앱과의 데이터 의존성이 없었기 때문에 그렇게 어렵지 않았습니다.
+
 - 여기에서는 SwiftUI 슬라이더 뷰를 UISlider로 대체할 것입니다.
+
 - SwiftUI Slider는 UIKit의 thumbTintColor 프로퍼티가 없기 떄문에 UISlider를 사용하여 이 프로퍼티에 접근해야 합니다.
+
 - 이를 위해 우리는 다음과 같은 순서를 따를 것입니다.
+
   1. UIViewRepresentable을 준수하는 SwiftUI view를 생성하기.
   2. *make* 메소드를 UIkit view를 초기화하면서 실행하기
   3. *update* 메소드를 SwiftUI view로부터 UIKit 뷰로 업데이트할 때 실행하기
   4. *Coordinator* 를 생성하고 UIKit view로부터 SwiftUI view를 업데이트 하는 target-action 메소드 실행하기.
+
+  
+
+<img width="753" alt="스크린샷 2020-10-20 오후 2 33 20" src="https://user-images.githubusercontent.com/48345308/96544274-3620e880-12e1-11eb-94e9-c4f2a13adac1.png">
+
+<img width="619" alt="스크린샷 2020-10-20 오후 2 35 47" src="https://user-images.githubusercontent.com/48345308/96544440-8c8e2700-12e1-11eb-917c-e5aa09500446.png">
+
+- UIKit의 view들 SwiftUI view 계층으로 통합시킬때 사용되는 프로토콜입니다.
+- 위 프로토콜을 준수하면 다음과 같은 2개의 메서드를 구현해야 합니다.
+- *makeUIView()* 메서드의 경우는 view 객체를 생성하고 초기 상태를 설정하는 역할을 합니다.
+- *updateUIView()* 메서드의 경우 특정 뷰의 상태를 SwiftUI의 새로운 정보로부터 업데이트하는 역할을 합니다.
 
 
 
