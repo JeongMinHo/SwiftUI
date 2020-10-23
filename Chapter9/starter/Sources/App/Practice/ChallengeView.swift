@@ -53,6 +53,7 @@ struct ChallengeView: View {
 							question: challengeTest.challenge.question)
 					}
 					if showAnswers {
+						
 						Divider()
 						ChoicesView(challengeTest: challengeTest)
 					}

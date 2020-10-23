@@ -1,4 +1,4 @@
-/// Copyright (c) 2020 Razeware LLC
+/// Copyright (c) 2019 Razeware LLC
 /// 
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
@@ -18,10 +18,6 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 /// 
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,33 +28,40 @@
 
 import SwiftUI
 
-struct ScoreView: View {
+struct FlightBoard: View {
 	
-	let numberOfQuestions: Int
+	var boardName: String
+	var flightData: [FlightInformation]
 	
-	@Binding var numberOfAnswered: Int
+	@State private var hideCanceled = false
 	
-    var body: some View {
-		
-		HStack {
-			Button("minho") {
-				print($numberOfAnswered)
+	var shownFlights: [FlightInformation] {
+		hideCanceled ? flightData.filter { $0.status != .cancelled } : flightData
+	}
+	
+	var body: some View {
+		VStack {
+			NavigationView {
+				if #available(iOS 14.0, *) {
+					List(shownFlights) { flight in
+					  NavigationLink(destination: FlightBoardInformation(flight: flight)) {
+						FlightRow(flight: flight)
+					  }
+					}
+					.navigationBarTitle(boardName)
+					.navigationBarItems(trailing: Toggle(isOn: $hideCanceled, label: {
+						Text("Hide Cancelled")
+					}))
+				} else {
+					// Fallback on earlier versions
+				}
 			}
-			Text("\(self.numberOfAnswered)/\(numberOfQuestions)")
-				.font(.caption)
-				.padding(4)
-			
-		
-			Spacer()
 		}
-    }
+	}
 }
 
-struct ScoreView_Previews: PreviewProvider {
-	
-	@State static var numberOfAnswers: Int = 0
-	
-    static var previews: some View {
-		ScoreView(numberOfQuestions: 5, numberOfAnswered: $numberOfAnswers)
-    }
+struct FlightBoard_Previews: PreviewProvider {
+	static var previews: some View {
+		FlightBoard(boardName: "Test", flightData: FlightInformation.generateFlights())
+	}
 }

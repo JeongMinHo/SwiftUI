@@ -18,10 +18,6 @@
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
 /// 
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
-///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
 /// FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
@@ -32,33 +28,27 @@
 
 import SwiftUI
 
-struct ScoreView: View {
+struct FlightBoardInformation: View {
 	
-	let numberOfQuestions: Int
+	var flight: FlightInformation
 	
-	@Binding var numberOfAnswered: Int
-	
-    var body: some View {
-		
-		HStack {
-			Button("minho") {
-				print($numberOfAnswered)
-			}
-			Text("\(self.numberOfAnswered)/\(numberOfQuestions)")
-				.font(.caption)
-				.padding(4)
-			
-		
+	var body: some View {
+		VStack(alignment: .leading) { HStack{
+			Text("\(flight.airline) Flight \(flight.number)") .font(.largeTitle)
 			Spacer()
+			
 		}
-    }
+		Text("\(flight.direction == .arrival ? "From: " : "To: ")" + "\(flight.otherAirport)")
+		Text(flight.flightStatus) .foregroundColor(Color(flight.timelineColor))
+			Spacer()
+		
+		}
+		.font(.headline) .padding(10)
+	}
 }
 
-struct ScoreView_Previews: PreviewProvider {
-	
-	@State static var numberOfAnswers: Int = 0
-	
-    static var previews: some View {
-		ScoreView(numberOfQuestions: 5, numberOfAnswered: $numberOfAnswers)
-    }
+struct FlightBoardInformation_Previews: PreviewProvider {
+	static var previews: some View {
+		FlightBoardInformation(flight: FlightInformation.generateFlight(0))
+	}
 }

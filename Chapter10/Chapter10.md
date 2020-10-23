@@ -114,7 +114,7 @@ struct FlashCard {
 2. 현재 카드를 위한 프로퍼티입니다.
 3. 현재 점수를 기록하기 위한 프로퍼티입니다.
 4. deck을 설정하기 위한 이니셜라이저 입니다. 
-5. convenience method를 만들어서 getNextCard() 를 호출하면 다음 카드를 얻는 것이 가능합니다. 이 메소드는 카드를 제공한 다음에 마지막 카드를 제거하는 방식을 띄고 있습니다.
+5. method를 만들어서 getNextCard() 를 호출하면 다음 카드를 얻는 것이 가능합니다. 이 메소드는 카드를 제공한 다음에 마지막 카드를 제거하는 방식을 띄고 있습니다.
 6. 마지막으로 LearningStore 클래스 또한 *ObservableObject* 를 준수해야 합니다.
 
 
@@ -237,7 +237,7 @@ ZStack { ForEach(deck.cards.filter({ $0.isActive })) {
 ### Your first gesture
 
 - SwiftUI의 제스처는 UIKit/AppKit 과는 그렇게 다르지는 않지만 단순하고 다소 우아해서 일부 개발자들 사이에서는 이것이 더 강력하다는 인식을 주고 있습니다.
-- 비록 SwiftUI의 제스처가 능력 면에서 더 좋아진 것으 아니지만 SwiftUI의 접근 방식은 더 쉽고 제스처들을 더 흥미롭게 사용하는 것이 가능합니다.
+- 비록 SwiftUI의 제스처가 능력 면에서 더 좋아진 것은 아니지만 SwiftUI의 접근 방식은 더 쉽고 제스처들을 더 흥미롭게 사용하는 것이 가능합니다.
 
 - 이전에 우리는 CardView의 현지어와 번역된 단어를 추가했습니다. 하지만 사용자가 바로 답을 받지 않고 자신의 지식을 테스트하고 싶다면 어떻게 해야 될까요?
 - 일단은 현지어를 보여주고 필요하다면 번역된 단어를 보여주는 것이 좋을 것 같습니다.
@@ -266,7 +266,7 @@ if self.revealed { Text(flashCard.card.answer)
 }
 ```
 
-<video src="/Users/user/Library/Application Support/typora-user-images/화면 기록 2020-10-22 오후 8.58.31.mov d"></video>
+<video src="/Users/user/Library/Application Support/typora-user-images/화면 기록 2020-10-22 오후 8.58.31.mov"></video>
 
 
 
@@ -319,6 +319,7 @@ return ZStack {
 ```
 
 - ZStack 위에 drag gesture를 추가할 것이므로 ZStackd을 return해야 합니다. (??? 질문)
+  - **월요일**
 
 
 
@@ -350,7 +351,8 @@ let drag = DragGesture()
 
 - 만약 사용자가 카드를 길게 선택하고 있을 때 인터렉션이 가능하다면 이것은 더 시각적으로 좋은 지표를 제공할 수 있을 것입니다.
 
-- 길게 누르고 있다면 물체는 튀거나 튀어나오는 것 같은 것을 통해 물체가 움직일 수 있다는 시각적인 단서를 제공할 수 있습니다.
+
+길게 누르고 있다면 물체는 튀거나 튀어나오는 것 같은 것을 통해 물체가 움직일 수 있다는 시각적인 단서를 제공할 수 있습니다.
 
 - SwiftUI는 2개의 제스처들을 합쳐서 추가할 수 있는 기능을 제공하고 있습니다.
 

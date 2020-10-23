@@ -1,15 +1,15 @@
-/// Copyright (c) 2020 Razeware LLC
-/// 
+/// Copyright (c) 2019 Razeware LLC
+///
 /// Permission is hereby granted, free of charge, to any person obtaining a copy
 /// of this software and associated documentation files (the "Software"), to deal
 /// in the Software without restriction, including without limitation the rights
 /// to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
 /// copies of the Software, and to permit persons to whom the Software is
 /// furnished to do so, subject to the following conditions:
-/// 
+///
 /// The above copyright notice and this permission notice shall be included in
 /// all copies or substantial portions of the Software.
-/// 
+///
 /// Notwithstanding the foregoing, you may not use, copy, modify, merge, publish,
 /// distribute, sublicense, create a derivative work, and/or sell copies of the
 /// Software in any work that is designed, intended, or marketed for pedagogical or
@@ -17,10 +17,6 @@
 /// or information technology.  Permission for such use, copying, modification,
 /// merger, publication, distribution, sublicensing, creation of derivative works,
 /// or sale is expressly withheld.
-/// 
-/// This project and source code may use libraries or frameworks that are
-/// released under various Open-Source licenses. Use of those libraries and
-/// frameworks are governed by their own individual licenses.
 ///
 /// THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
 /// IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
@@ -32,33 +28,27 @@
 
 import SwiftUI
 
-struct ScoreView: View {
-	
-	let numberOfQuestions: Int
-	
-	@Binding var numberOfAnswered: Int
-	
-    var body: some View {
-		
-		HStack {
-			Button("minho") {
-				print($numberOfAnswered)
-			}
-			Text("\(self.numberOfAnswered)/\(numberOfQuestions)")
-				.font(.caption)
-				.padding(4)
-			
-		
-			Spacer()
-		}
+struct FlightTimeHistory: View {
+  var flight: FlightInformation
+  
+  var body: some View {
+    VStack {
+      Text("On-Time History for \(flight.airline) Flight \(flight.number)")
+      List(flight.history, id:\.day) { h in
+        HStack {
+          Text("\(h.day) day ago - \(h.flightDelayDescription)")
+          Spacer()
+        }
+        .background(h.delayColor.opacity(0.3))
+      }
+      .frame(height: 400)
     }
+    .padding()
+  }
 }
 
-struct ScoreView_Previews: PreviewProvider {
-	
-	@State static var numberOfAnswers: Int = 0
-	
-    static var previews: some View {
-		ScoreView(numberOfQuestions: 5, numberOfAnswered: $numberOfAnswers)
-    }
+struct FlightTimeHistory_Previews: PreviewProvider {
+  static var previews: some View {
+    FlightTimeHistory(flight: FlightInformation.generateFlight())
+  }
 }
