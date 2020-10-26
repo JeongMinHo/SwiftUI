@@ -7,7 +7,7 @@
 - *Graphic* 은 사용자에게 정보를 효율적이고 이해하기 쉽게 전달할 수 있습니다. 예를 들어, 동일한 정보를 텍스트로 읽는 것보다는 그래픽을 사용하여 요약하는 것이 훨씬 효과적입니다.
 - 이번 챕터에서는 SwiftUI의 grphic 들의 사용 방법을 알아보고 몇 개의 graphic 들을 직접 생성해 보도록 하겠습니다.
 
-
+# 
 
 ### Creating shapes
 
@@ -41,7 +41,7 @@
 ```
 
 - 위와 같이 색깔을 채우면 라이트/다크 모드에 관계없이 색을 blue로 칠하는 것이 가능합니다. 
-- 기억해야 될 것은 *.fill* 메소드은 *.frame* 메소드 이전에 호출해야 합니다! (?)
+- 기억해야 될 것은 *.fill* 메소드은 *.frame* 메소드 이전에 호출해야 됩니다!!
 
 
 
@@ -51,7 +51,7 @@
 
 <img width="846" alt="스크린샷 2020-10-23 오후 12 09 34" src="https://user-images.githubusercontent.com/48345308/96951945-a0779a00-1528-11eb-8299-fa3d59b91aa0.png">
 
-- *LinearGradient* 는 물체를 통과하는 직선을 따라서 색상들 사이에 원화란 전환이 가능합니다.Image(systemName: "airplane")
+- *LinearGradient* 는 물체를 통과하는 직선을 따라서 색상들 사이에 원활한 전환이 가능합니다.
 - *startPoint* 와 *endPoint* 는 UintPoint 구조체를 사용합니다. 
 - *UnitPoint* 구조체의 원래의 값은 왼쪽 상단이 (0,0) 이며 오른쪽과 아래로 값이 점점 커집니다. (frame의 origin point와 동일합니다.)
 - 시작하는 점과 끝나는 점을 원하는 곳에서 잡을 수 있으며 심지어 view의 밖에서도 잡을 수 있습니다. 
@@ -91,13 +91,18 @@ Image(systemName: "airplane")
 - 이를 해결하기 위한 좋은 방법은 표시되는 frame에 이미지를 채움으로써 모든 크기의 view에 맞게 조정하는 것입니다. 이렇게 한다면 어떠한 앱에서도 이 view를 크기에 맞게 설정하는 것이 가능하며 이는 반응성을 유지할 수 있다는 것을 의미합니다. 
 
 ```Swift
-Group {
-  FirstVisitAward()
-		.environment(\.colorScheme, .light) 
-  	.frame(width: 200, height: 200)
-	FirstVisitAward() 
-  	.environment(\.colorScheme, .dark) 
-  	.frame(width: 200, height: 200)
+struct AirportAwards_Previews: PreviewProvider {
+	static var previews: some View {
+		Group {
+			FirstVisitAward()
+				.environment(\.colorScheme, .light)
+				.frame(width: 200, height: 200)
+			
+			FirstVisitAward()
+				.environment(\.colorScheme, .dark)
+				.frame(width: 200, height: 200)
+		}
+	}
 }
 ```
 
@@ -111,21 +116,20 @@ Group {
 
 ### Scaling drawings in views
 
-- 이제 뱃지는 꽤 멋있지만 알아채리지 못할 수 있는 미묘한 버그가 있습니다.
+- 이제 뱃지는 꽤 멋있지만 알아차리지 못할 수 있는 미묘한 버그가 있습니다.
 
 <img width="330" alt="스크린샷 2020-10-23 오후 1 38 55" src="https://user-images.githubusercontent.com/48345308/96957250-1b46b200-1535-11eb-980d-f6091e6b95b5.png">
 
 - 빌드하고 실행해보면 rotated square들이 frame의 바깥에서 title과 text로 bleed 되었습니다.
-- 적용한 회전은 frame 안에 머물 수 있을만큼은 scale이 되지 않습니다.
+- 적용한 회전은 frame 안에 머물 수 있을만큼은 크기가 되지 않습니다.
 - 이것을 해결하기 위하여 award frame 크기를 조정하여 회전이 된 모양이 frame에 들어가도록 해야합니다.
 
 ```Swift
-eometryReader { geometry in
+GeometryReader { geometry in
 			ZStack {
 				ForEach(0..<3) { i in
 					Rectangle()
 						.fill(LinearGradient(gradient: .init(colors: [Color.green, Color.blue]), startPoint: .bottomLeading, endPoint: .topTrailing))
-						
 						// !!!!!
 						.frame(width: geometry.size.width * 0.7, height: geometry.size.width * 0.7)
 						.rotationEffect(.degrees(Double(i) * 60))
@@ -175,7 +179,7 @@ eometryReader { geometry in
 
 - *Path* 는 경로를 구축하는데 사용하는 enclosure를 생성합니다.
 - *move(to:)* 는 path의 시작 위치를 설정하며, 현재 위치를 이동하지만 경로에는 아무것도 추가하지 않습니다.
-- 그 다음 3개의 줄을 생성하여 polygon 을 만드는 것이 가능합니다. 이것은 마치 도로가 멀어지는 것 같은 3D 효과를 주기도 합니다.(비행기 활주로 느낌??)
+- 그 다음 3개의 줄을 생성하여 polygon(다각형) 을 만드는 것이 가능합니다. 이것은 마치 도로가 멀어지는 것 같은 3D 효과를 주기도 합니다.(비행기 활주로 느낌??)
 
 ```Swift
 GeometryReader { geometry in
@@ -279,7 +283,7 @@ Image(systemName: "car.fill")
 - SwiftUI는 필요할때 마다 각각의 view들을 스크린에 그립니다. 
 - 현대 apple 기기 내부의 프로세서와 그래픽 하드웨어는 강력하기 때문에 사용자가 느려지는 것을 보지 않고 처리하는 것이 가능합니다.
 - 그러나 어느 순간 시스템의 과부하로 사용자가 알아차릴 정도로 앱이 느려지게 되기도 합니다. 
-- 만약 그것이 발생했다면 *drawingGroup()* modifier를 사용할 수 있습니다. 이 modifier는 최종 푶시 전에 뷰의 내용을 offscreen 이미지로 결합합니다. 
+- 만약 그것이 발생했다면 *drawingGroup()* modifier를 사용할 수 있습니다. 이 modifier는 최종 표시 전에 뷰의 내용을 offscreen 이미지로 결합합니다. 
 - 이 offscreen 구성은 애플의 고성능 그래픽 프레임워크인 Metal을 사용하여 복잡한 view를 렌더링하는데 있어 인상적으로 속도를 향상시켰습니다. 
 - 많은 수의 gradient, shadow 및 기타 효과를 사용하다보면 성능 문제가 발생할 가능성이 높아집니다. 그럴때는 *drawingGroup()* 을 생각하세요!
 
@@ -297,3 +301,5 @@ Image(systemName: "car.fill")
 
 
 - animation을 무리하게 사용하게 되면 main thread에 너무 많은 작업을 가중 시킵니다. UIView를 직접 이동시키는 애니메이션의 경우에는 view의 이동에 따라 계속해서 그려줘야 하기 때문에 main thread에 부담이 될 수 있습니다. 반면 Core Animation의 경우 다시 그리지 않고 main thread가 아닌 GPU를 이용하여 비트맵 이미지만 변경시키기 때문에 UIView 애니메이션에 비해 부담이 덜합니다.
+
+(즉 drawRect()를 통해 다시 그리지 않고 비트맵 이미지만 변환시킨다.)

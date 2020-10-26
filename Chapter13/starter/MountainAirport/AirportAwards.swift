@@ -31,8 +31,12 @@ import SwiftUI
 struct AirportAwards: View {
 	var body: some View {
 	
+		
 		if #available(iOS 14.0, *) {
 			VStack {
+				Button("hi") {
+					
+				}
 				ScrollView {
 					FirstVisitAward()
 						.frame(width: 250, height: 250)
