@@ -318,8 +318,43 @@ return ZStack {
 }
 ```
 
-- ZStack 위에 drag gesture를 추가할 것이므로 ZStackd을 return해야 합니다. (??? 질문)
-  - **월요일**
+- ZStack 위에 drag gesture를 추가할 것이므로 ZStack을 return해야 합니다. (??? 질문)
+
+  - ```Swift
+    var body: some View {
+    		
+    }
+    ```
+
+  - 여기서 body는 연산 프로퍼티입니다. 따라서 return을 해줘야 하는데 지금까지 이것이 생략 가능했던 이유는 Swift 5.1 단일 표현 함수는 return 키워드를 생략할 수 있었기 때문입니다. https://www.hohyeonmoon.com/blog/swift-swiftui/
+
+  ```Swift
+  // 위아래가 같다.
+  struct ContentView: View {
+      var body: some View {
+          return Text("Hello, world!")
+      }
+  }
+  
+  struct ContentView: View {
+      var body: some View {
+          Text("Hello, world!")
+      }
+  }
+  ```
+
+  - 하지만 만약에 return 키워드로 구분을 하지 않는다면 아래와 같이 preview에 2개의 view가 뜨는 것을 볼 수 있습니다.
+
+  ![image](https://user-images.githubusercontent.com/48345308/97133957-fb122f80-178e-11eb-95c1-14bb1e5178c9.png)
+  - 신기한 점 하나 더 추가!
+
+    위의 코드를 실행하면 Preview에서는 2개로 나누어지지만 시뮬레이터에서는 자동으로 VStack에 넣어주는 형식을 띕니다. 
+
+    혹시 그렇다면 return 키워드 생략시 자동으로 알맞은 Stack에 넣어주는걸까요..?
+
+    ​	<img width="250" alt="스크린샷 2020-10-26 오후 1 38 27" src="https://user-images.githubusercontent.com/48345308/97134426-893ae580-1790-11eb-9e33-2e748cf5c372.png">
+
+- 근데 왜 여기에서는 return 키워드를 붙이지 않아도 정상적으로 작동되는지 정말 모르겠습니다....
 
 
 

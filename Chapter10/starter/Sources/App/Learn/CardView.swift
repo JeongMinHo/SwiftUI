@@ -52,9 +52,7 @@ struct CardView: View {
 		self.dragged = dragged
 	}
 	
-    var body: some View {
-		
-		
+	var body: some View {
 		let drag = DragGesture()
 			.onChanged { self.offset = $0.translation }
 			.onEnded {
@@ -73,8 +71,9 @@ struct CardView: View {
 			.updating($isLongPressed) { (value, state, transition) in
 				state = value
 			}.simultaneously(with: drag)
-        
-		ZStack {
+		
+		/// ????
+		return ZStack {
 			Rectangle()
 				.fill(Color.red)
 				.frame(width: 320, height: 210)
@@ -91,7 +90,6 @@ struct CardView: View {
 						.font(.caption)
 						.foregroundColor(.white)
 				}
-				
 				Spacer()
 			}
 		}
@@ -106,14 +104,14 @@ struct CardView: View {
 				self.revealed = !self.revealed
 			}
 		}))
-    }
+	}
 }
 
 struct CardView_Previews: PreviewProvider {
-    static var previews: some View {
-        let card = FlashCard(card:
-				Challenge(question: "Apple", pronunciation: "Apple", answer: "Omena")
+	static var previews: some View {
+		let card = FlashCard(card:
+								Challenge(question: "Apple", pronunciation: "Apple", answer: "Omena")
 		)
 		return CardView(card)
-    }
+	}
 }
